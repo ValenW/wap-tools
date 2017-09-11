@@ -20,8 +20,9 @@ public class Generate {
     private static Logger log = LoggerFactory.getLogger(Generate.class);
 
     public static void main(String[] args) {
-        String csvPath="/home/zuo_ji/Desktop/text.csv";
-        String jsonPath = "/home/zuo_ji/Desktop/";
+
+        String csvPath="text.csv";
+        String jsonPath = "json/";
         new Generate().genTextJson(csvPath,jsonPath);
     }
 
@@ -74,7 +75,7 @@ public class Generate {
             log.error("read csv file error {}",e);
             throw  new RuntimeException("读csv文件失败,("+e.getMessage()+")");
         }
-        log.info("get {} text id", textDefDtos.size());
+        log.info("get {} text id from file", textDefDtos.size());
         return textDefDtos;
     }
 
