@@ -1,5 +1,5 @@
 Textid,English,Japanese
-recruiting.mailtemplate.notificationType.applied, Accept application , 応”募”受付
+recruiting.mailtemplate.notificationType.applied, Accept application , 応募受付
 recruiting.mailtemplate.notificationType.unreserverd, Request Reservation , 予約依頼
 recruiting.mailtemplate.notificationType.reserved, Accept Reservation , 予約受付
 recruiting.mailtemplate.notificationType.pass,Passed Notification , 合格通知

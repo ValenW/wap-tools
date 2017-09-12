@@ -1,4 +1,4 @@
-package com.wap.tools;
+package com.wap.tools.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
