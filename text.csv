@@ -1,8 +1,0 @@
-Textid,English,Japanese
-recruiting.mailtemplate.notificationType.applied, Accept application , 応募受付
-recruiting.mailtemplate.notificationType.unreserverd, Request Reservation , 予約依頼
-recruiting.mailtemplate.notificationType.reserved, Accept Reservation , 予約受付
-recruiting.mailtemplate.notificationType.pass,Passed Notification , 合格通知
-recruiting.mailtemplate.notificationType.fail,Failed Notification,不合格通知
-recruiting.mailtemplate.notificationType.offer,Offer Notification,内定通知
-recruiting.mailtemplate.notificationType.common,Common Notification,共通通知

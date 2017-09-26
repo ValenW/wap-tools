@@ -71,6 +71,7 @@ public class TextResourceService {
                 textDefDtos.add(textDefDto);
             });
         }
+
         writeToCsv(fromTextDefSet(textDefDtos));
     }
 
