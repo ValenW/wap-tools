@@ -11,7 +11,7 @@
         <el-checkbox  :label="tag.id" border>  <el-tag size="mini" :type="tag.color">{{tag.name}}</el-tag></el-checkbox>
       </span>
     </el-checkbox-group>
-    <div class="">
+    <div class="" style="min-width:200px">
       <el-button class="button-new-tag" size="small" @click="showAddTag"><i class="fa fa-plus"></i> New Tag</el-button>
       <el-button class="button-new-tag" size="small" type="danger" @click="deleteTag" :disabled="selectedTags.length==0"><i class="fa fa-remove"></i> Delete Tag</el-button>
 
@@ -117,6 +117,7 @@ export default {
             message: 'Deleted',
             type: 'success'
           });
+          this.selectedTags = []
         } else {
           this.$this.$notify.error({
             title: 'Error',
@@ -144,7 +145,7 @@ export default {
       })
     },
     filterTag(tagIds) {
-      console.log(tagIds)
+      // console.log(tagIds)
       if (!tagIds || tagIds.length == 0) {
         this.links = this.all;
         return;
@@ -159,7 +160,7 @@ export default {
 
     },
     filterLink(value) {
-      this.links = this.all.filter(it => it.name.indexOf(value) > -1);
+      this.links = this.all.filter(it => it.name.toLowerCase().indexOf(value.toLowerCase()) > -1);
       // console.log(value,this.links)
     },
     getLinks() {
