@@ -25,17 +25,28 @@ public class LinkService {
         return linkMapper.selectAll();
     }
 
-    public Link add(Link link) {
+    public Link addOrUpdate(Link link) {
         List<Integer> tagIds = null;
         if (link.getTags() != null) {
             tagIds = link.getTags().stream()
                     .map(tag -> tag.getId())
                     .collect(Collectors.toList());
         }
-        link.setCreateTime(LocalDateTime.now());
-        Link newLink= linkRepository.save(link);
-        linkMapper.addTags(tagIds,newLink.getId());
-        return newLink;
+
+        if (link.getId() == null) {
+            link.setCreateTime(LocalDateTime.now());
+            Link newLink = linkRepository.save(link);
+            linkMapper.addTags(tagIds, newLink.getId());
+            return newLink;
+        } else {
+            link.setUpdateTime(LocalDateTime.now());
+            linkMapper.deleteTagByLink(link.getId());
+            if (!tagIds.isEmpty()) {
+                linkMapper.addTags(tagIds, link.getId());
+            }
+            linkMapper.update(link);
+            return link;
+        }
     }
 
     public Link add(String name, String href) {

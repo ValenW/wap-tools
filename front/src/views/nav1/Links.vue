@@ -10,16 +10,21 @@
       <span v-for="tag in tags" style="margin-right:10px;">
         <el-checkbox  :label="tag.id" border>  <el-tag size="mini" :type="tag.color">{{tag.name}}</el-tag></el-checkbox>
       </span>
-      <el-button class="button-new-tag" size="small" @click="showAddTag">+ New Tag</el-button>
     </el-checkbox-group>
+    <div class="">
+      <el-button class="button-new-tag" size="small" @click="showAddTag"><i class="fa fa-plus"></i> New Tag</el-button>
+      <el-button class="button-new-tag" size="small" type="danger" @click="deleteTag" :disabled="selectedTags.length==0"><i class="fa fa-remove"></i> Delete Tag</el-button>
+
+    </div>
 
   </div>
   <template v-for="item in links">
-			<link-item :link="item" @remove="removeLink"></link-item>
+			<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
 		</template>
   <!-- link -->
   <el-dialog title="Add a new link" :visible.sync="dialogVisible" width="30%">
     <el-form ref="form" :model="form" label-width="80px">
+
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
@@ -72,7 +77,8 @@ import {
   addLink,
   delLink,
   getTags,
-  addTag
+  addTag,
+  delTag,
 } from "../../api/api";
 import linkItem from "@/components/linkItem";
 export default {
@@ -100,6 +106,36 @@ export default {
     linkItem
   },
   methods: {
+    deleteTag() {
+      delTag(this.selectedTags).then(res => {
+        if (res.status == 200) {
+          console.log(res)
+          this.getTags();
+          this.getLinks();
+          this.$notify({
+            title: 'Success',
+            message: 'Deleted',
+            type: 'success'
+          });
+        } else {
+          this.$this.$notify.error({
+            title: 'Error',
+            message: res.statusText,
+          });
+        }
+
+      })
+    },
+    editLink(link) {
+      console.log('edit', link)
+      this.dialogVisible = true;
+      this.form = {
+        id: link.id,
+        name: link.name,
+        href: link.href,
+        tags: link.tags.map(it => it.id),
+      }
+    },
     addTagConfirm() {
       addTag(this.formTag).then(res => {
         this.getTags();
@@ -195,5 +231,10 @@ export default {
 <style scoped>
 .link-search {
   margin: 10px 0;
+}
+
+.link-row {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -27,7 +27,8 @@
             tag.sys
         FROM link
             LEFT JOIN tag_link ON tag_link.link_id = link.id
-            LEFT JOIN tag ON tag_link.tag_id = tag.id;
+            LEFT JOIN tag ON tag_link.tag_id = tag.id
+        ORDER BY link.create_time DESC;
     </select>
 
     <select id="selectByTagId" resultMap="link">
@@ -40,7 +41,7 @@
         FROM link
             LEFT JOIN tag_link ON tag_link.link_id = link.id
             LEFT JOIN tag ON tag_link.tag_id = tag.id
-        where tag_id=#{tagId}
+        WHERE tag_id = #{tagId}
 
     </select>
 
@@ -51,18 +52,26 @@
             link
     </select>
 
-    <insert id="addTags" >
-      insert INTO tag_link(tag_id,link_id) VALUES
-        <foreach collection="tagIds" item="tag_id" index="index"     separator=",">
+    <insert id="addTags">
+        insert INTO tag_link(tag_id,link_id) VALUES
+        <foreach collection="tagIds" item="tag_id" index="index" separator=",">
             ( #{tag_id},#{linkId})
         </foreach>
     </insert>
 
     <delete id="deleteTagByLink">
-        delete from tag_link where link_id=#{linkId};
+        DELETE FROM tag_link
+        WHERE link_id = #{linkId};
     </delete>
 
+    <update id="update" parameterType="Link">
+        UPDATE link
+        SET name        = #{link.name},
+            href        = #{link.href},
+            update_time = #{link.updateTime}
+        WHERE id = #{link.id}
 
+    </update>
 
 
 </mapper>

@@ -3,7 +3,10 @@
   <div class="item-row">
     <a :href="link.href" target="_blank">
       <h4>{{link.name}}</h4> </a>
-    <el-button type="text" @click="remove"><i class="fa fa-remove"></i></el-button>
+    <div class="">
+      <el-button type="text" @click="edit"><i class="fa fa-edit"></i></el-button>
+      <el-button type="text" @click="remove"><i class="fa fa-remove"></i></el-button>
+    </div>
   </div>
   <div class="link-tags">
     <el-tag v-for="tag in link.tags" style="margin-right:10px" size="mini" :type="tag.color">{{tag.name}}</el-tag>
@@ -30,13 +33,18 @@ export default {
   methods: {
     remove() {
       this.$emit('remove', this.link.id);
-
+    },
+    edit() {
+      this.$emit('edit', this.link)
     }
   },
   props: ['link']
 }
 </script>
 <style lang="css">
+h4{
+  margin-top: 5px;
+}
 .item-row{
     display: flex;
    justify-content:  space-between;

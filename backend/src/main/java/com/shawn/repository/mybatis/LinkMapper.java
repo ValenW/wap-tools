@@ -18,4 +18,6 @@ public interface LinkMapper {
     public void addTags(@Param("tagIds") List<Integer> tagIds,@Param("linkId") int linkId);
 
     void deleteTagByLink(@Param("linkId")int linkId);
+
+    void update(@Param("link") Link link);
 }

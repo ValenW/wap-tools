@@ -12,13 +12,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = { Application.class })
+@SpringBootTest(classes = {Application.class})
 @Slf4j
 public class LinkMapperTest {
 
@@ -33,13 +34,25 @@ public class LinkMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         // 创建代理对象
         LinkMapper oc = sqlSession.getMapper(LinkMapper.class);
-        List<Link> list=oc.selectAll();
+        List<Link> list = oc.selectAll();
         log.info(list.toString());
     }
 
     @Test
-    public void addTags(){
-        linkMapper.addTags(Arrays.asList(1,2),3);
+    public void addTags() {
+        linkMapper.addTags(Arrays.asList(1, 2), 3);
+    }
+
+    @Test
+    public void update() {
+        List<Link> list = linkMapper.selectAll();
+        Link link = list.get(0);
+        log.info(link.toString());
+        link.setHref("test test");
+        link.setUpdateTime(LocalDateTime.now());
+        linkMapper.update(link);
+
+        log.info(linkMapper.selectAll().get(0).toString());
     }
 
 }

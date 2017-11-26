@@ -17,7 +17,6 @@ public class LinkController {
     private LinkService linkService;
 
 
-
     @GetMapping("/links")
     public List<Link> getLinks() {
         return linkService.list();
@@ -31,7 +30,7 @@ public class LinkController {
     @PostMapping("/link")
     public Link add(@RequestBody Link link) {
 
-        link = linkService.add(link);
+        link = linkService.addOrUpdate(link);
 
         return link;
     }

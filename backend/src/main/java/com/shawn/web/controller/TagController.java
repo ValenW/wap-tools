@@ -5,6 +5,7 @@ import com.shawn.service.TagService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -31,6 +32,11 @@ public class TagController {
     @DeleteMapping("/tag/{id}")
     public void delete(@PathVariable("id") Integer id){
         tagService.delete(id);
+    }
+
+    @PostMapping("/tag/delete")
+    public void delete(@RequestBody List<Integer> ids){
+        tagService.delete(ids);
     }
 
 

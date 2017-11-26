@@ -63,3 +63,7 @@ export const getTags = () => {
 export const addTag = params => {
   return axios.post(`${base}/api/tag`, params)
 };
+
+export const delTag = params => {
+  return axios.post(`${base}/api/tag/delete`, params)
+}

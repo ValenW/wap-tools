@@ -18,19 +18,24 @@ public class TagService {
     @Resource
     private TagMapper tagMapper;
 
-    public Iterable<Tag> all(){
+    public Iterable<Tag> all() {
         return tagRepository.findAll();
     }
 
-    public void add(String name,String color){
-        Tag tag=new Tag(name,color);
+    public void add(String name, String color) {
+        Tag tag = new Tag(name, color);
         tagRepository.save(tag);
     }
 
     @Transactional
-    public void delete(Integer id){
+    public void delete(Integer id) {
         tagRepository.delete(id);
         tagMapper.deleteTagToLink(id);
+    }
+
+    @Transactional
+    public void delete(List<Integer> ids) {
+        ids.forEach(this::delete);
     }
 
 
