@@ -52,7 +52,7 @@ class ExceptionHandlerControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exceptionHandler(HttpServletRequest request, Exception e) {
         logError(request, e);
-
+        log.error("throw a exception,{}",e);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new Error()

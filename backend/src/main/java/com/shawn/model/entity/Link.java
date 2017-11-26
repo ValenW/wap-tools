@@ -36,7 +36,7 @@ public class Link {
     private LocalDateTime updateTime;
 
     @Transient
-    private List<Integer> tagIds;
+    private List<Tag> tags;
 
     public Link(String name, String href) {
         this.name = name;

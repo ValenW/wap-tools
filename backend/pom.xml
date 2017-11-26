@@ -79,6 +79,13 @@
             <version>${mysql-connector-java.version}</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
         <!-- Databases - Uses HSQL by default -->
         <dependency>
             <groupId>org.hsqldb</groupId>

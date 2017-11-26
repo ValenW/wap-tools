@@ -2,17 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shawn.repository.mybatis.LinkMapper">
 
-    <resultMap id="user" type="Link">
+    <resultMap id="link" type="Link">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="href" column="href"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+        <collection property="tags" ofType="com.shawn.model.entity.Tag">
+            <id property="id" column="tag_id"/>
+            <result property="name" column="tag_name"/>
+            <result property="color" column="color"/>
+            <result property="sys" column="sys"/>
+        </collection>
     </resultMap>
 
-    <select id="selecCount" resultType="integer">
+    <select id="selectAll" resultMap="link">
         SELECT
-        COUNT(*)
-        FROM
-        link
+            link.*,
+            tag.id   AS tag_id,
+            tag.name AS tag_name,
+            tag.color,
+            tag.sys
+        FROM link
+            LEFT JOIN tag_link ON tag_link.link_id = link.id
+            LEFT JOIN tag ON tag_link.tag_id = tag.id;
     </select>
+
+    <select id="selectByTagId" resultMap="link">
+        SELECT
+            link.*,
+            tag.id   AS tag_id,
+            tag.name AS tag_name,
+            tag.color,
+            tag.sys
+        FROM link
+            LEFT JOIN tag_link ON tag_link.link_id = link.id
+            LEFT JOIN tag ON tag_link.tag_id = tag.id
+        where tag_id=#{tagId}
+
+    </select>
+
+
+    <select id="selecCount" resultType="integer">
+        SELECT COUNT(*)
+        FROM
+            link
+    </select>
+
+    <insert id="addTags" >
+      insert INTO tag_link(tag_id,link_id) VALUES
+        <foreach collection="tagIds" item="tag_id" index="index"     separator=",">
+            ( #{tag_id},#{linkId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteTagByLink">
+        delete from tag_link where link_id=#{linkId};
+    </delete>
+
+
+
 
 </mapper>

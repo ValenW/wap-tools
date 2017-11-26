@@ -21,7 +21,7 @@ public class Tag {
     private String name;
     private String color;
     //默认Tag
-    private boolean sys;
+    private Boolean sys;
 
     public Tag(String name, String color) {
         this.name = name;
