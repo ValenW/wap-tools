@@ -77,12 +77,12 @@ DROP TABLE IF EXISTS `link`;
 CREATE TABLE `link` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(80) DEFAULT NULL,
-  `href` varchar(80) DEFAULT NULL,
+  `href` varchar(400) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,8 +91,58 @@ CREATE TABLE `link` (
 
 LOCK TABLES `link` WRITE;
 /*!40000 ALTER TABLE `link` DISABLE KEYS */;
-INSERT INTO `link` VALUES (12,'dsfsdf','sdfsdf',NULL,'2017-11-26 01:44:29',NULL);
+INSERT INTO `link` VALUES (13,'Applicant','http://dsfsdfsdfsdf.werwer.sdfsdf',NULL,'2017-11-26 12:53:34',NULL),(17,'test','http://test.com',NULL,'2017-11-26 14:49:40',NULL),(18,'sdfsdf','sdfsdfsd',NULL,'2017-11-26 14:50:39',NULL);
 /*!40000 ALTER TABLE `link` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tag` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) DEFAULT NULL,
+  `color` varchar(40) DEFAULT NULL,
+  `sys` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tag`
+--
+
+LOCK TABLES `tag` WRITE;
+/*!40000 ALTER TABLE `tag` DISABLE KEYS */;
+INSERT INTO `tag` VALUES (1,'hello','red',1),(2,'topic-12','primary',NULL),(3,'sdfsdf','info',NULL),(4,'sdfsdf','info',NULL),(5,'dsfdf','warning',NULL),(6,'dfsdfds','success',NULL),(7,'dfsdfds','info',NULL),(8,'dfsdfds','danger',NULL);
+/*!40000 ALTER TABLE `tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tag_link`
+--
+
+DROP TABLE IF EXISTS `tag_link`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tag_link` (
+  `tag_id` int(11) NOT NULL,
+  `link_id` int(11) NOT NULL,
+  PRIMARY KEY (`tag_id`,`link_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tag_link`
+--
+
+LOCK TABLES `tag_link` WRITE;
+/*!40000 ALTER TABLE `tag_link` DISABLE KEYS */;
+INSERT INTO `tag_link` VALUES (1,3),(1,12),(1,16),(1,18),(2,3),(2,16),(2,17);
+/*!40000 ALTER TABLE `tag_link` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -128,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-26  2:02:12
+-- Dump completed on 2017-11-26 15:11:50
