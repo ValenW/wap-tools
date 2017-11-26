@@ -147,8 +147,9 @@ export default {
           id: it
         };
       });
-      this.form.tags = tagIds;
-      addLink(this.form).then(res => {
+      var params = Object.assign({}, this.form);
+      params.tags = tagIds;
+      addLink(params).then(res => {
         console.log(res);
         this.dialogVisible = false;
         this.getLinks();
