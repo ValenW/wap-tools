@@ -36,7 +36,9 @@ public class LinkService {
         if (link.getId() == null) {
             link.setCreateTime(LocalDateTime.now());
             Link newLink = linkRepository.save(link);
-            linkMapper.addTags(tagIds, newLink.getId());
+            if(!tagIds.isEmpty()) {
+                linkMapper.addTags(tagIds, newLink.getId());
+            }
             return newLink;
         } else {
             link.setUpdateTime(LocalDateTime.now());
