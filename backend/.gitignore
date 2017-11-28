@@ -1,6 +1,6 @@
 target/
 custom_flow.vsdx
-
+src/main/resources/static/**
 ### IntelliJ IDEA ###
 .idea
 *.iws
