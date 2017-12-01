@@ -58,17 +58,13 @@ export default {
         })
       })
       var str = '['
-      console.log(list)
+      // console.log(list)
       list.forEach(item => {
         if (item.ja && item.ja != '') {
-          str = str.concat(`{"key":{"class":"com.worksap.company.framework.textresource.TextResourceKey",\
-"pl":"{\\"textId\\":\\"${item.textId}\\",\
-\\"locale\\":\\"ja\\",\\"plural\\":\\"\\"}"},"value":"${item.ja}","systemFlg":false},`)
+          str = str.concat(`{"class":"com.worksap.company.hue.core.dto.TextDefDto","pl":"{\\"key\\":{\\"class\\":\\"com.worksap.company.framework.textresource.TextResourceKey\\",\\"pl\\":\\"{\\\\\\"textId\\\\\\":\\\\\\"${item.textId}\\\\\\",\\\\\\"locale\\\\\\":\\\\\\"ja\\\\\\",\\\\\\"plural\\\\\\":\\\\\\"\\\\\\"}\\"},\\"value\\":\\"${item.ja}\\",\\"systemFlg\\":false}"},`)
         }
         if (item.en && item.en != '') {
-          str = str.concat(`{"key":{"class":"com.worksap.company.framework.textresource.TextResourceKey",\
-"pl":"{\\"textId\\":\\"${item.textId}\\",\
-\\"locale\\":\\"en\\",\\"plural\\":\\"\\"}"},"value":"${item.en}","systemFlg":false},`)
+          str = str.concat(`{"class":"com.worksap.company.hue.core.dto.TextDefDto","pl":"{\\"key\\":{\\"class\\":\\"com.worksap.company.framework.textresource.TextResourceKey\\",\\"pl\\":\\"{\\\\\\"textId\\\\\\":\\\\\\"${item.textId}\\\\\\",\\\\\\"locale\\\\\\":\\\\\\"en\\\\\\",\\\\\\"plural\\\\\\":\\\\\\"\\\\\\"}\\"},\\"value\\":\\"${item.en}\\",\\"systemFlg\\":false}"},`)
         }
       })
       str = str.slice(0, -1);
