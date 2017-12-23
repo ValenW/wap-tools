@@ -244,8 +244,8 @@ public class XxxClass {
 这段代码会产生怎样的效果呢？效果如下：
 
 ```
-2017-01-01 13:35:52.698  INFO 13184 --- [nio-8080-exec-1] com.shawn.xxx.XxxClass                   : This is an info log.
-2017-01-01 13:35:52.738 ERROR 13184 --- [nio-8080-exec-1] com.shawn.xxx.XxxClass                   : This is an error log.
+2017-01-01 13:35:52.698  INFO 13184 --- [nio-8080-exec-1] com.worksap.xxx.XxxClass                   : This is an info log.
+2017-01-01 13:35:52.738 ERROR 13184 --- [nio-8080-exec-1] com.worksap.xxx.XxxClass                   : This is an error log.
 ```
 
 本项目对日志记录的有效配置全部位于 ```src/main/resources/application.properties``` 下，包括日志级别的配置、输出到日志文件的配置等等，如下：
@@ -259,7 +259,7 @@ logging.level.root=INFO
 logging.level.org.springframework=INFO
 logging.level.org.springframework.web=INFO
 logging.level.org.mybatis=INFO
-logging.level.com.shawn=DEBUG
+logging.level.com.worksap=DEBUG
 # File output
 project.name=SpringBoot-Mybatis
 logging.file=/${project.name}/logs/SpringBoot-Mybatis.log
@@ -316,10 +316,10 @@ public class PerformanceMonitor {
     /**
      * A join point is in the controller layer if the method is
      * modified by public and defined in a type in the
-     * com.shawn.service package or any sub-package under that
+     * com.worksap.service package or any sub-package under that
      * and modified by public.
      */
-    @Pointcut("execution(public * com.shawn.web.controller..*(..))")
+    @Pointcut("execution(public * com.worksap.web.controller..*(..))")
     private void controllerLayer() {
     }
 
@@ -357,10 +357,10 @@ public class PerformanceMonitor {
 因此，系统每执行一个动作（也就是，每响应一个请求所执行的操作），在日志上都会记录下它所消耗的时间，若超过1秒，则会以 ```error``` 级别记录日志。如下：
 
 ```
-2017-01-03 22:58:19.431 ERROR 6384 --- [nio-8080-exec-9] com.shawn.monitor.PerformanceMonitor     : [BookController.postBook(..)][Elapsed time: 1.457 s][Note that it's time consuming!]
-2017-01-03 22:58:47.875  INFO 6384 --- [io-8080-exec-10] com.shawn.monitor.PerformanceMonitor     : [BookController.getBooks(..)][Elapsed time: 0.656 s]
-2017-01-03 22:59:16.356  INFO 6384 --- [nio-8080-exec-1] com.shawn.monitor.PerformanceMonitor     : [BookController.putBook(..)][Elapsed time: 0.618 s]
-2017-01-03 22:59:51.259  INFO 6384 --- [nio-8080-exec-3] com.shawn.monitor.PerformanceMonitor     : [BookController.deleteBook(..)][Elapsed time: 0.016 s]
+2017-01-03 22:58:19.431 ERROR 6384 --- [nio-8080-exec-9] com.worksap.monitor.PerformanceMonitor     : [BookController.postBook(..)][Elapsed time: 1.457 s][Note that it's time consuming!]
+2017-01-03 22:58:47.875  INFO 6384 --- [io-8080-exec-10] com.worksap.monitor.PerformanceMonitor     : [BookController.getBooks(..)][Elapsed time: 0.656 s]
+2017-01-03 22:59:16.356  INFO 6384 --- [nio-8080-exec-1] com.worksap.monitor.PerformanceMonitor     : [BookController.putBook(..)][Elapsed time: 0.618 s]
+2017-01-03 22:59:51.259  INFO 6384 --- [nio-8080-exec-3] com.worksap.monitor.PerformanceMonitor     : [BookController.deleteBook(..)][Elapsed time: 0.016 s]
 ```
 
 ### OAuth 2.0
@@ -377,12 +377,12 @@ OAuth 2.0 有4种授权方式，分别是：授权码模式（authorization code
 
 既然清楚了运行流程，那么接下来要进行的是对 Spring Security OAuth 的配置，涉及到这些的类有：
 
-- ```com.shawn.model.dto.CustomUserDetails```: 该类是一个模型类，实现了 ```UserDetails``` 接口。它主要负责传送用户的认证信息，包括：用户名, 密码, 该用户所拥有的权限等等
-- ```com.shawn.security.AuthorizationServerConfiguration```: 该类是一个配置类，继承了 ```AuthorizationServerConfigurerAdapter```。它主要负责授权服务器的配置，包括：信任的客户端信息的管理、请求令牌的 URL 的配置、 令牌的管理、如何认证用户的配置、对于请求令牌的 URL 的安全约束的配置等等
-- ```com.shawn.security.ResourceServerConfiguration```: 该类是一个配置类，继承了 ```ResourceServerConfigurerAdapter```。他主要负责资源服务器的配置，包括：对于请求资源的 URL 的安全约束的配置等等
-- ```com.shawn.security.WebSecurityConfiguration```: 该类是一个配置类，继承了 ```GlobalAuthenticationConfigurerAdapter```。它主要负责有关认证的配置，包括：用户的认证信息的获取等等
-- ```com.shawn.service.UserService```: 该类是一个服务类的接口，继承了 ```UserDetailsService``` 接口
-- ```com.shawn.service.impl.UserServiceImpl```: 该类是 ```UserService``` 接口的实现类
+- ```com.worksap.model.dto.CustomUserDetails```: 该类是一个模型类，实现了 ```UserDetails``` 接口。它主要负责传送用户的认证信息，包括：用户名, 密码, 该用户所拥有的权限等等
+- ```com.worksap.security.AuthorizationServerConfiguration```: 该类是一个配置类，继承了 ```AuthorizationServerConfigurerAdapter```。它主要负责授权服务器的配置，包括：信任的客户端信息的管理、请求令牌的 URL 的配置、 令牌的管理、如何认证用户的配置、对于请求令牌的 URL 的安全约束的配置等等
+- ```com.worksap.security.ResourceServerConfiguration```: 该类是一个配置类，继承了 ```ResourceServerConfigurerAdapter```。他主要负责资源服务器的配置，包括：对于请求资源的 URL 的安全约束的配置等等
+- ```com.worksap.security.WebSecurityConfiguration```: 该类是一个配置类，继承了 ```GlobalAuthenticationConfigurerAdapter```。它主要负责有关认证的配置，包括：用户的认证信息的获取等等
+- ```com.worksap.service.UserService```: 该类是一个服务类的接口，继承了 ```UserDetailsService``` 接口
+- ```com.worksap.service.impl.UserServiceImpl```: 该类是 ```UserService``` 接口的实现类
 
 有了这些配置，我们实现的效果是：
 
@@ -569,7 +569,7 @@ a -> {System.out.println(a);}
 	);
 	```
 
-在本项目中，第一类情况大量的出现。例如，```com.shawn.web.controller.BookController``` 中的一段代码：
+在本项目中，第一类情况大量的出现。例如，```com.worksap.web.controller.BookController``` 中的一段代码：
 
 ```java
 ...

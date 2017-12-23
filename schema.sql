@@ -111,6 +111,14 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE TABLE text_resource(
+    id varchar(200) not null primary key,
+    en varchar(200),
+    ja varchar(200),
+    create_time datetime,
+    update_time datetime
+) CHARSET=utf8;
+
 --
 -- Dumping data for table `tag`
 --

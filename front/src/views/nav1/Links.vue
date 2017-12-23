@@ -1,26 +1,30 @@
 <template>
 <section>
 
-  <el-input placeholder="请输入内容" v-model="key" class="link-search" @change="filterLink">
+  <el-input placeholder="请输入内容" v-model="key" class="link-search" >
     <!-- <el-button slot="append" icon="el-icon-search"></el-button> -->
     <el-button slot="append" type="primary" @click="showAdd"><i class="fa fa-plus"></i></el-button>
   </el-input>
   <div class="link-row">
-    <el-checkbox-group v-model="selectedTags" size="small" @change="filterTag">
+    <el-checkbox-group v-model="selectedTags" size="small" >
       <span v-for="tag in tags" style="margin-right:10px;">
-        <el-checkbox  :label="tag.id" border>  <el-tag size="mini" :type="tag.color">{{tag.name}}</el-tag></el-checkbox>
+        <el-checkbox  :label="tag.id" border>  <el-tag size="mini" :color="tag.color">{{tag.name}}</el-tag></el-checkbox>
       </span>
     </el-checkbox-group>
-    <div class="" style="min-width:200px">
-      <el-button class="button-new-tag" size="small" @click="showAddTag"><i class="fa fa-plus"></i> New Tag</el-button>
-      <el-button class="button-new-tag" size="small" type="danger" @click="deleteTag" :disabled="selectedTags.length==0"><i class="fa fa-remove"></i> Delete Tag</el-button>
-
+    <div class="" style="">
+      <el-button-group>
+        <el-button class="button-new-tag" size="small" @click="showAddTag"><i class="fa fa-plus"></i></el-button>
+        <el-button class="button-new-tag" size="small" @click="showEditTag" :disabled="selectedTags.length!=1"><i class="fa fa-edit"></i></el-button>
+        <el-button class="button-new-tag" size="small" type="danger" @click="deleteTag" :disabled="selectedTags.length==0"><i class="fa fa-remove"></i></el-button>
+      </el-button-group>
     </div>
 
   </div>
+  <br>
   <template v-for="item in links">
 			<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
 		</template>
+
   <!-- link -->
   <el-dialog title="Add a new link" :visible.sync="dialogVisible" width="30%">
     <el-form ref="form" :model="form" label-width="80px">
@@ -54,12 +58,7 @@
         <el-input v-model="formTag.name"></el-input>
       </el-form-item>
       <el-form-item label="Type">
-        <el-radio-group v-model="formTag.color">
-          <el-radio label="info"></el-radio>
-          <el-radio label="success"></el-radio>
-          <el-radio label="warning"></el-radio>
-          <el-radio label="danger"></el-radio>
-        </el-radio-group>
+        <el-color-picker v-model="formTag.color" @active-change="colorChange" show-alpha></el-color-picker>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -88,13 +87,13 @@ export default {
       dialogVisible: false,
       key: "",
       all: [],
-      links: [],
       form: {
         name: "",
         href: "",
         tags: [],
       },
       formTag: {
+        id:'',
         name: '',
         color: '',
       },
@@ -105,7 +104,23 @@ export default {
   components: {
     linkItem
   },
+  computed:{
+    links(){
+      return  this.all.filter(item=>{
+           if (!this.selectedTags || this.selectedTags.length == 0) {
+             return true;
+            }           
+            return this.selectedTags.some(it => item.tags.some(tag => tag.id == it))
+    }).filter(item=>{
+      return item.name.toLowerCase().indexOf(this.key.toLowerCase())>-1;
+    })
+  }
+
+  },
   methods: {
+    colorChange(color){
+      this.formTag.color=color;
+    },
     deleteTag() {
       delTag(this.selectedTags).then(res => {
         if (res.status == 200) {
@@ -142,31 +157,28 @@ export default {
         this.getTags();
         console.log(res)
         this.tagVisible = false;
+        this.getLinks();
       })
     },
-    filterTag(tagIds) {
-      // console.log(tagIds)
-      if (!tagIds || tagIds.length == 0) {
-        this.links = this.all;
-        return;
-      }
-      var contain = link => {
-        return tagIds.some(it => link.tags.some(tag => tag.id == it))
-      }
-      this.links = this.all.filter(it => contain(it));
-    },
+   
     showAddTag() {
       this.tagVisible = true;
 
     },
-    filterLink(value) {
-      this.links = this.all.filter(it => it.name.toLowerCase().indexOf(value.toLowerCase()) > -1);
-      // console.log(value,this.links)
+    showEditTag(){
+      if(this.selectedTags.length>1){
+
+      }
+      this.formTag.id=this.selectedTags[0];
+      let tag=this.tags.filter(item=>item.id==this.formTag.id)[0];
+      this.formTag.name=tag.name;
+      this.formTag.color=tag.color;
+      this.tagVisible=true;
     },
+
     getLinks() {
       getLinkList().then(res => {
         console.log(res);
-        this.links = res.data;
         this.all = res.data;
       });
     },
@@ -219,6 +231,7 @@ export default {
     getTags() {
       getTags().then(res => {
         this.tags = res.data;
+
       })
     }
   },

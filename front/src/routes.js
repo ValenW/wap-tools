@@ -37,7 +37,11 @@ let routes = [{
         component: text,
         name: 'Text Resource'
       },
-      // { path: '/form', component: Form, name: 'Form' },
+      {
+        path: '/table',
+        component: Table,
+        name: 'Text Table'
+      },
       // { path: '/user', component: user, name: '列表' },
     ]
   },

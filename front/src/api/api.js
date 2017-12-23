@@ -67,3 +67,18 @@ export const addTag = params => {
 export const delTag = params => {
   return axios.post(`${base}/api/tag/delete`, params)
 }
+
+export const getTextsapi = () => {
+  return axios.get(`${base}/api/texts`)
+}
+
+export const saveTextapi = (params) => {
+  return axios.post(`${base}/api/text/list`, params);
+}
+
+export const delTextapi = (params) => {
+  return axios.delete(`${base}/api/text`, params);
+}
+export const bulkDelTxt = (params) => {
+  return axios.post(`${base}/api/text/bulkDel`, params);
+}
