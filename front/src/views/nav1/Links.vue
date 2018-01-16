@@ -23,8 +23,8 @@
   </div>
   <br>
   <template v-for="item in links">
-			<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
-		</template>
+	<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
+  </template>
 
   <!-- link -->
   <el-dialog title="Add a new link" :visible.sync="dialogVisible" width="30%">
@@ -78,172 +78,169 @@ import {
   delLink,
   getTags,
   addTag,
-  delTag,
-} from "../../api/api";
-import linkItem from "@/components/linkItem";
+  delTag
+} from '../../api/api'
+import linkItem from '@/components/linkItem'
 export default {
   data() {
     return {
       tagVisible: false,
       dialogVisible: false,
-      key: "",
+      key: '',
       all: [],
       form: {
-        name: "",
-        href: "",
-        tags: [],
+        name: '',
+        href: '',
+        tags: []
       },
       formTag: {
-        id:'',
+        id: '',
         name: '',
-        color: '',
+        color: ''
       },
       tags: [],
-      selectedTags: [],
-    };
+      selectedTags: []
+    }
   },
   components: {
     linkItem
   },
-  computed:{
-    links(){
-      return  this.all.filter(item=>{
-           if (!this.selectedTags || this.selectedTags.length == 0) {
-             return true;
-            }
-            return this.selectedTags.some(it => item.tags.some(tag => tag.id == it))
-    }).filter(item=>{
-      return item.name.toLowerCase().indexOf(this.key.toLowerCase())>-1;
-    })
-  }
+  computed: {
+    links() {
+      return this.all.filter(item => {
+        if (!this.selectedTags || this.selectedTags.length === 0) {
+          return true
+        }
+        return this.selectedTags.some(it => item.tags.some(tag => tag.id === it))
+      }).filter(item => {
+        return item.name.toLowerCase().indexOf(this.key.toLowerCase()) > -1
+      })
+    }
 
   },
   methods: {
-    colorChange(color){
-      this.formTag.color=color;
+    colorChange(color) {
+      this.formTag.color = color
     },
     deleteTag() {
       delTag(this.selectedTags).then(res => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           console.log(res)
-          this.getTags();
-          this.getLinks();
+          this.getTags()
+          this.getLinks()
           this.$notify({
             title: 'Success',
             message: 'Deleted',
             type: 'success'
-          });
+          })
           this.selectedTags = []
         } else {
           this.$this.$notify.error({
             title: 'Error',
-            message: res.statusText,
-          });
+            message: res.statusText
+          })
         }
-
       })
     },
     editLink(link) {
       console.log('edit', link)
-      this.dialogVisible = true;
+      this.dialogVisible = true
       this.form = {
         id: link.id,
         name: link.name,
         href: link.href,
-        tags: link.tags.map(it => it.id),
+        tags: link.tags.map(it => it.id)
       }
     },
     addTagConfirm() {
       addTag(this.formTag).then(res => {
-        this.getTags();
+        this.getTags()
         console.log(res)
-        this.tagVisible = false;
-        this.getLinks();
+        this.tagVisible = false
+        this.getLinks()
       })
     },
 
     showAddTag() {
-      this.tagVisible = true;
-
+      this.tagVisible = true
     },
-    showEditTag(){
-      if(this.selectedTags.length>1){
+    showEditTag() {
+      if (this.selectedTags.length > 1) {
 
       }
-      this.formTag.id=this.selectedTags[0];
-      let tag=this.tags.filter(item=>item.id==this.formTag.id)[0];
-      this.formTag.name=tag.name;
-      this.formTag.color=tag.color;
-      this.tagVisible=true;
+      this.formTag.id = this.selectedTags[0]
+      const tag = this.tags.filter(item => item.id == this.formTag.id)[0]
+      this.formTag.name = tag.name
+      this.formTag.color = tag.color
+      this.tagVisible = true
     },
 
     getLinks() {
       getLinkList().then(res => {
-        console.log(res);
-        this.all = res.data;
-      });
+        console.log(res)
+        this.all = res.data
+      })
     },
     showAdd() {
-      this.dialogVisible = true;
+      this.dialogVisible = true
       this.form = {
-        name: "",
-        href: "",
-        tags: [],
+        name: '',
+        href: '',
+        tags: []
       }
     },
     add() {
       var tagIds = this.form.tags.map(function(it) {
         return {
           id: it
-        };
-      });
-      var params = Object.assign({}, this.form);
-      params.tags = tagIds;
+        }
+      })
+      var params = Object.assign({}, this.form)
+      params.tags = tagIds
       addLink(params).then(res => {
-        console.log(res);
-        this.dialogVisible = false;
-        this.getLinks();
-      });
+        console.log(res)
+        this.dialogVisible = false
+        this.getLinks()
+      })
     },
     removeLink(id) {
-      var _this = this;
-      this.$confirm("Are you sure to delete this item?", "Confirm", {
-          confirmButtonText: "OK",
-          cancelButtonText: "Cancel",
-          type: "warning"
-        })
+      var _this = this
+      this.$confirm('Are you sure to delete this item?', 'Confirm', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      })
         .then(() => {
           delLink(id).then(res => {
-            console.log(res);
-            _this.getLinks();
+            console.log(res)
+            _this.getLinks()
             _this.$message({
-              type: "success",
-              message: "Deleted!"
-            });
-          });
+              type: 'success',
+              message: 'Deleted!'
+            })
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "Cancel"
-          });
-        });
+            type: 'info',
+            message: 'Cancel'
+          })
+        })
     },
     getTags() {
       getTags().then(res => {
-        this.tags = res.data;
-
+        this.tags = res.data
       })
     }
   },
   created() {
-    this.getLinks();
-    this.getTags();
+    this.getLinks()
+    this.getTags()
   }
-};
+}
 </script>
 
-<style scoped>
+<style lan="scss">
 .link-search {
   margin: 10px 0;
 }

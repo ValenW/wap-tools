@@ -57,7 +57,7 @@ export default {
             var str=util.genText(list)
             util.download(str,util.getFileName())
         },
-        
+
     }
 }
 </script>

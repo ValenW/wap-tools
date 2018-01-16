@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:8080', // target host
+        target: 'http://localhost:8089', // target host
         // target: 'http://172.26.142.142:5008',
         changeOrigin: true, // needed for virtual hosted sites
         //  ws: true, // proxy websockets
