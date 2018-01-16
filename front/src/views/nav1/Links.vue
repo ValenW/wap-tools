@@ -8,7 +8,8 @@
   <div class="link-row">
     <el-checkbox-group v-model="selectedTags" size="small" >
       <span v-for="tag in tags" style="margin-right:10px;">
-        <el-checkbox  :label="tag.id" border>  <el-tag size="mini" :color="tag.color">{{tag.name}}</el-tag></el-checkbox>
+        <el-checkbox  :label="tag.id" >  <el-tag size="mini" :color="tag.color" style="color:#fff">{{tag.name}}</el-tag></el-checkbox>
+        <!-- <el-checkbox  :label="tag.id" border size="medium">  {{tag.name}}</el-checkbox> -->
       </span>
     </el-checkbox-group>
     <div class="" style="">
@@ -109,7 +110,7 @@ export default {
       return  this.all.filter(item=>{
            if (!this.selectedTags || this.selectedTags.length == 0) {
              return true;
-            }           
+            }
             return this.selectedTags.some(it => item.tags.some(tag => tag.id == it))
     }).filter(item=>{
       return item.name.toLowerCase().indexOf(this.key.toLowerCase())>-1;
@@ -160,7 +161,7 @@ export default {
         this.getLinks();
       })
     },
-   
+
     showAddTag() {
       this.tagVisible = true;
 

@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="link-tags">
-    <el-tag v-for="tag in link.tags" style="margin-right:10px" size="mini" :color="tag.color">{{tag.name}}</el-tag>
+    <el-tag class="link-tag" v-for="tag in link.tags" style="margin-right:10px" size="mini" :color="tag.color">{{tag.name}}</el-tag>
   </div>
 
   <div class="link-content item-row">
@@ -51,6 +51,9 @@ h4{
 }
 .link-tags{
      margin:-15px 0 5px;
+}
+.link-tag{
+    color:#fff;
 }
 .link-content{
     color: #aaa;
