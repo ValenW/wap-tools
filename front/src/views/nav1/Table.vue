@@ -1,5 +1,5 @@
 <template>
-<section >
+<section>
     <!--工具条-->
     <el-col :span="24" style="padding: 20px 0px 0px;">
         <el-form :inline="true" :model="filters">
@@ -216,7 +216,7 @@ export default {
             this.editLoading = true
             // NProgress.start();
             const para = Object.assign({}, this.editForm)
-            para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd')
+            para.birth = (!para.birth || para.birth === '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd')
             saveTextapi([para]).then((res) => {
               this.editLoading = false
               // NProgress.done();
@@ -267,9 +267,6 @@ export default {
       }).then(() => {
         this.listLoading = true
         // NProgress.start();
-        const para = {
-          ids: ids
-        }
         bulkDelTxt(ids).then((res) => {
           this.listLoading = false
           // NProgress.done();
@@ -296,7 +293,7 @@ export default {
 </script>
 
 <style lan="scss">
-.table-small td{
+.table-small td {
     padding: 0px;
 }
 </style>
