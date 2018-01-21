@@ -30,7 +30,9 @@ mvn spring-boot:run
 3. 记录生成过的 `text resource`,并支持搜索、修改和重新生成。
 4. text resource 支持转义字符，如`"` `\`
 
-
+### 2018.01.21
+1. 支持服务端搜索text resource
+2. 支持带”的csv格式的text resource导入和生成。
 
 # Relate Links
 - [vue-admin](https://github.com/taylorchen709/vue-admin)

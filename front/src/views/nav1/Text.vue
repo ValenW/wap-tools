@@ -15,50 +15,54 @@
 
 <script>
 import util from '@/common/js/util.js'
-import { saveTextapi } from '../../api/api';
+import { saveTextapi } from '../../api/api'
 
 export default {
-    data() {
-        return {
-            text: '',
-        }
-    },
-    computed: {
-        clickable() {
-            return this.text && this.text != ''
-        }
-    },
-    methods: {
-        convert(){
-            console.log(this.text.split('\n'));
-            if (!this.text || this.text == '') {
-                return;
-            }
-            var lines = this.text.split('\n')
-            var list = [];
-            lines.forEach(item => {
-                var arr = item.split(',')
-                list.push({
-                    id: arr[0],
-                    en: arr[1],
-                    ja: arr[2],
-                })
-            })
-            return list;
-        },
-        save(list){
-            saveTextapi(list).then(res=>{
-                console.log(res);
-            })
-        },
-        generate() {
-            let list=this.convert();
-            this.save(list)
-            var str=util.genText(list)
-            util.download(str,util.getFileName())
-        },
-
+  data() {
+    return {
+      text: ''
     }
+  },
+  computed: {
+    clickable() {
+      return this.text && this.text !== ''
+    }
+  },
+  methods: {
+    convert() {
+      console.log(this.text.split('\n'))
+      if (!this.text || this.text === '') {
+        return
+      }
+      var lines = this.text.split('\n')
+      var list = []
+      lines.forEach(item => {
+        if (item.startsWith('"')) {
+          item = item.replace(/","/g, ',')
+          item = item.slice(1, -1)
+        }
+        var arr = item.split(',')
+        list.push({
+          id: arr[0],
+          en: arr[1],
+          ja: arr[2]
+        })
+      })
+      return list
+    },
+    save(list) {
+      saveTextapi(list).then(res => {
+        console.log(res)
+      })
+    },
+    generate() {
+      const list = this.convert()
+      this.save(list)
+      var str = util.genText(list)
+      util.download(str, util.getFileName())
+    }
+
+  }
 }
 </script>
 

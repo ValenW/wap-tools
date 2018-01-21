@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.worksap.model.dto.Pager;
+import com.worksap.model.dto.PaginatedResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,10 @@ public class TextResouceController {
 
 
     @GetMapping("/texts")
-    public List<TextResource> getTextResources() {
-        return (List<TextResource>)textResourceService.all();
+    public PaginatedResult getTextResources(String keyword, Pager pager) {
+        keyword=keyword.trim().toLowerCase();
+        return new PaginatedResult().setSize(textResourceService.count(keyword))
+        .setData(textResourceService.findAll(keyword,pager));
     }
 
     @DeleteMapping("/text")

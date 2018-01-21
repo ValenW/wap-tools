@@ -20,8 +20,7 @@ public class PaginatedResult implements Serializable {
 
     private static final long serialVersionUID = 6191745064790884707L;
 
-    private int currentPage; // Current page number
-    private int totalPage; // Number of total pages
+    private long size; // Current page number
     private Object data; // Paginated resources
 
 }

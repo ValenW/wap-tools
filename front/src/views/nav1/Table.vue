@@ -2,9 +2,9 @@
 <section>
     <!--工具条-->
     <el-col :span="24" style="padding: 20px 0px 0px;">
-        <el-form :inline="true" :model="filters">
+        <el-form :inline="true" >
             <el-form-item>
-                <el-input v-model="filters.keyword" placeholder="keyword"></el-input>
+                <el-input v-model="keyword" placeholder="keyword" @input="search"></el-input>
             </el-form-item>
             <el-button type="danger" @click="batchRemove" :disabled="this.sels.length===0">批量删除</el-button>
             <el-button type="success" @click="downloadTxt" :disabled="this.sels.length===0">下载</el-button>
@@ -18,7 +18,7 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="textList" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;" class="table-small">
+    <el-table :data="texts" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;" class="table-small">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column type="index" width="60" :index="indexMethod">
@@ -75,7 +75,6 @@ import util from '../../common/js/util'
 // import NProgress from 'nprogress'
 import {
   getTextsapi,
-  getUserListPage,
   delTextapi,
   bulkDelTxt,
   saveTextapi,
@@ -85,9 +84,7 @@ import {
 export default {
   data() {
     return {
-      filters: {
-        keyword: ''
-      },
+      keyword: '',
       texts: [],
       total: 0,
       page: 1,
@@ -134,35 +131,38 @@ export default {
     }
   },
   computed: {
-    textList() {
-      var list = this.texts.filter(item => {
-        return item.id.toLowerCase().indexOf(this.filters.keyword.toLowerCase()) > -1 ||
-                    item.en.toLowerCase().indexOf(this.filters.keyword.toLowerCase()) > -1 ||
-                    item.ja.toLowerCase().indexOf(this.filters.keyword.toLowerCase()) > -1
-      })
-      const pageend = this.page * this.pageSize > list.length ? list.length : this.page * this.pageSize
-      this.total = list.length
-      return list.slice((this.page - 1) * this.pageSize, pageend)
-    }
+
   },
   methods: {
+    search(val, a) {
+      console.log(val, a)
+      this.page = 1
+      this.total = 0
+      this.getTexts()
+    },
     indexMethod(index) {
       return (this.page - 1) * this.pageSize + index + 1
     },
     handleSizeChange(val) {
       this.pageSize = val
+      this.getTexts()
     },
     handleCurrentChange(val) {
       this.page = val
-      // this.getTexts();
+      this.getTexts()
     },
     // 获取用户列表
     getTexts() {
       this.listLoading = true
       // NProgress.start();
-      getTextsapi().then((res) => {
-        this.total = res.data.length
-        this.texts = res.data
+      var params = { params: {
+        keyword: this.keyword,
+        curPage: this.page,
+        pageSize: this.pageSize
+      }}
+      getTextsapi(params).then((res) => {
+        this.total = res.data.size
+        this.texts = res.data.data
         this.listLoading = false
         // NProgress.done();
       })

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.worksap.model.dto.Pager;
+import com.worksap.repository.mybatis.TextMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +20,14 @@ public class TextResourceService {
     @Resource
     private TextResourceRepository textResourceRepository;
 
-    public Iterable<TextResource> all() {
-        return textResourceRepository.findAll();
+    @Resource
+    private TextMapper textMapper;
+
+    public long count(String keyword){
+        return textMapper.count(keyword);
+    }
+    public Iterable<TextResource> findAll(String keyword, Pager pager) {
+        return textMapper.findAll(keyword,pager);
     }
 
     public void add(List<TextResource> list) {

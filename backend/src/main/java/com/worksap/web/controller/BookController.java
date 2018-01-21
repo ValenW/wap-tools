@@ -38,9 +38,7 @@ public class BookController {
 
         return ResponseEntity
                 .ok(new PaginatedResult()
-                        .setData(bookService.getBooksByPage(page, perPage))
-                        .setCurrentPage(page)
-                        .setTotalPage(bookService.getTotalPage(perPage)));
+                        .setData(bookService.getBooksByPage(page, perPage)));
     }
 
     @GetMapping("/{bookId}")

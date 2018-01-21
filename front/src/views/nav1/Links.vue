@@ -47,7 +47,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
 				<el-button @click="dialogVisible = false">Cancel</el-button>
-				<el-button type="primary" @click="add">Confirm</el-button>
+				<el-button type="primary" @click="add" :loading="linkSaving">Confirm</el-button>
 			</span>
   </el-dialog>
 
@@ -99,7 +99,8 @@ export default {
         color: ''
       },
       tags: [],
-      selectedTags: []
+      selectedTags: [],
+      linkSaving: false
     }
   },
   components: {
@@ -165,9 +166,6 @@ export default {
       this.tagVisible = true
     },
     showEditTag() {
-      if (this.selectedTags.length > 1) {
-
-      }
       this.formTag.id = this.selectedTags[0]
       const tag = this.tags.filter(item => item.id == this.formTag.id)[0]
       this.formTag.name = tag.name
@@ -197,10 +195,12 @@ export default {
       })
       var params = Object.assign({}, this.form)
       params.tags = tagIds
+      this.linkSaving = true
       addLink(params).then(res => {
         console.log(res)
         this.dialogVisible = false
         this.getLinks()
+        this.linkSaving = false
       })
     },
     removeLink(id) {
