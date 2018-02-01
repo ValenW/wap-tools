@@ -18,20 +18,20 @@
     </el-col>
 
     <!--列表-->
-    <el-table :data="texts" highlight-current-row v-loading="listLoading" @selection-change="selsChange" style="width: 100%;" class="table-small">
+    <el-table :data="texts" highlight-current-row v-loading="listLoading" @selection-change="selsChange" @sort-change="sortChange" style="width: 100%;" class="table-small">
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column type="index" width="60" :index="indexMethod">
         </el-table-column>
-        <el-table-column prop="id" label="id" width="400" sortable>
+        <el-table-column prop="id" label="id" width="400" sortable="custom">
         </el-table-column>
-        <el-table-column prop="en" label="English" width="250" sortable>
+        <el-table-column prop="en" label="English" width="250" sortable="custom">
         </el-table-column>
-        <el-table-column prop="ja" label="Japanese" width="250" sortable>
+        <el-table-column prop="ja" label="Japanese" width="250" sortable="custom">
         </el-table-column>
-        <el-table-column prop="createTime" label="Create Time" width="200" sortable>
+        <el-table-column prop="createTime" label="Create Time" width="200" sortable="custom">
         </el-table-column>
-        <el-table-column prop="updateTime" label="Last Update Time" width="200" sortable>
+        <el-table-column prop="updateTime" label="Last Update Time" width="200" sortable="custom">
         </el-table-column>
         <el-table-column label="操作" width="150">
             <template scope="scope">
@@ -89,6 +89,8 @@ export default {
       total: 0,
       page: 1,
       pageSize: 20,
+      orderCol: '',
+      order: '',
       listLoading: false,
       sels: [], // 列表选中列
 
@@ -143,6 +145,12 @@ export default {
     indexMethod(index) {
       return (this.page - 1) * this.pageSize + index + 1
     },
+    sortChange(col, order) {
+      console.log(col.prop, col.order)
+      this.orderCol = col.prop
+      this.order = col.order === 'descending' ? -1 : 1
+      this.getTexts()
+    },
     handleSizeChange(val) {
       this.pageSize = val
       this.getTexts()
@@ -158,7 +166,9 @@ export default {
       var params = { params: {
         keyword: this.keyword,
         curPage: this.page,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        orderCol: this.orderCol,
+        order: this.order
       }}
       getTextsapi(params).then((res) => {
         this.total = res.data.size
@@ -240,7 +250,7 @@ export default {
             this.addLoading = true
             // NProgress.start();
             const para = Object.assign({}, this.addForm)
-            para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd')
+            para.birth = (!para.birth || para.birth === '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd')
             addUser(para).then((res) => {
               this.addLoading = false
               // NProgress.done();

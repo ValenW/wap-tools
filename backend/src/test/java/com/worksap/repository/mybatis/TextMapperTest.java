@@ -1,19 +1,19 @@
 package com.worksap.repository.mybatis;
 
-import com.worksap.Application;
-import com.worksap.model.dto.Pager;
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
+import com.worksap.Application;
+import com.worksap.model.dto.Pager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { Application.class })

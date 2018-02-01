@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.worksap.util.StringUtil;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,14 +22,38 @@ public class Pager {
      */
     private Integer pageSize;
 
-    public long getStart(){
-        if(curPage<1){
-            throw new IllegalArgumentException(String.format("错误的当前页数%s",curPage));
-        }
-        return pageSize*(curPage-1);
+    private String orderCol;
+
+    private Integer order;
+
+    public Pager(int curPage, int pageSize) {
+        this.curPage = curPage;
+        this.pageSize = pageSize;
     }
 
-    public long getLimit(){
+    public long getStart() {
+        if (curPage < 1) {
+            throw new IllegalArgumentException(String.format("错误的当前页数%s", curPage));
+        }
+        return pageSize * (curPage - 1);
+    }
+
+    public long getLimit() {
         return pageSize;
     }
+
+    public String getOd() {
+        return order!=null&&order.intValue() == -1 ? "DESC" : "ASC";
+    }
+
+    public String getOrderCol() {
+        if (StringUtils.isBlank(orderCol)) {
+            return null;
+        }
+        return StringUtil.camelToUnderline(orderCol);
+    }
+
+
+
+
 }

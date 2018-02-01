@@ -1,0 +1,19 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+
+  <cache name="texts"
+         maxEntriesLocalHeap="200"
+         timeToLiveSeconds="600">
+  </cache>
+
+  <cache name="tags"
+         maxEntriesLocalHeap="200"
+         timeToLiveSeconds="600">
+  </cache>
+
+  <cache name="links"
+         maxEntriesLocalHeap="200"
+         timeToLiveSeconds="600">
+  </cache>
+
+</ehcache>

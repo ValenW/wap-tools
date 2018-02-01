@@ -7,19 +7,18 @@
   </el-input>
   <div class="link-row">
     <el-checkbox-group v-model="selectedTags" size="small" >
-      <span v-for="tag in tags" style="margin-right:10px;">
-        <el-checkbox  :label="tag.id" >  <el-tag size="mini" :color="tag.color" style="color:#fff">{{tag.name}}</el-tag></el-checkbox>
+      <span v-for="tag in tags" style="margin-right:10px;margin-bottom:5px">
+        <el-checkbox style="margin-bottom:5px;" :label="tag.id" >  <el-tag size="mini" :color="tag.color" style="color:#fff">{{tag.name}}</el-tag></el-checkbox>
         <!-- <el-checkbox  :label="tag.id" border size="medium">  {{tag.name}}</el-checkbox> -->
       </span>
     </el-checkbox-group>
-    <div class="" style="">
+    <div class="" style="min-width:140px">
       <el-button-group>
         <el-button class="button-new-tag" size="small" @click="showAddTag"><i class="fa fa-plus"></i></el-button>
         <el-button class="button-new-tag" size="small" @click="showEditTag" :disabled="selectedTags.length!=1"><i class="fa fa-edit"></i></el-button>
         <el-button class="button-new-tag" size="small" type="danger" @click="deleteTag" :disabled="selectedTags.length==0"><i class="fa fa-remove"></i></el-button>
       </el-button-group>
     </div>
-
   </div>
   <br>
   <template v-for="item in links">
