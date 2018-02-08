@@ -3,17 +3,17 @@
 
   <cache name="texts"
          maxEntriesLocalHeap="200"
-         timeToLiveSeconds="600">
+         timeToLiveSeconds="36000">
   </cache>
 
   <cache name="tags"
          maxEntriesLocalHeap="200"
-         timeToLiveSeconds="600">
+         timeToLiveSeconds="36000">
   </cache>
 
   <cache name="links"
          maxEntriesLocalHeap="200"
-         timeToLiveSeconds="600">
+         timeToLiveSeconds="36000">
   </cache>
 
 </ehcache>

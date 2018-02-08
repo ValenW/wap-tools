@@ -21,19 +21,19 @@
     <el-table :data="texts" highlight-current-row v-loading="listLoading" @selection-change="selsChange" @sort-change="sortChange" style="width: 100%;" class="table-small">
         <el-table-column type="selection" width="55">
         </el-table-column>
-        <el-table-column type="index" width="60" :index="indexMethod">
+        <el-table-column type="index" width="60" :index="indexMethod" fixed>
         </el-table-column>
-        <el-table-column prop="id" label="id" width="400" sortable="custom">
+        <el-table-column prop="id" label="id" width="400" sortable="custom" fixed>
         </el-table-column>
         <el-table-column prop="en" label="English" width="250" sortable="custom">
         </el-table-column>
         <el-table-column prop="ja" label="Japanese" width="250" sortable="custom">
         </el-table-column>
-        <el-table-column prop="createTime" label="Create Time" width="200" sortable="custom">
+        <el-table-column prop="createTime" label="Create Time" width="170" sortable="custom">
         </el-table-column>
-        <el-table-column prop="updateTime" label="Last Update Time" width="200" sortable="custom">
+        <el-table-column prop="updateTime" label="Last Update Time" width="170" sortable="custom">
         </el-table-column>
-        <el-table-column prop="ip" label="IP" width="200" sortable="custom">
+        <el-table-column prop="ip" label="IP" width="100" sortable="custom">
         </el-table-column>
         <el-table-column label="操作" width="150">
             <template scope="scope">
