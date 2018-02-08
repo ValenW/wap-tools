@@ -382,7 +382,7 @@ OAuth 2.0 有4种授权方式，分别是：授权码模式（authorization code
 - ```com.worksap.security.ResourceServerConfiguration```: 该类是一个配置类，继承了 ```ResourceServerConfigurerAdapter```。他主要负责资源服务器的配置，包括：对于请求资源的 URL 的安全约束的配置等等
 - ```com.worksap.security.WebSecurityConfiguration```: 该类是一个配置类，继承了 ```GlobalAuthenticationConfigurerAdapter```。它主要负责有关认证的配置，包括：用户的认证信息的获取等等
 - ```com.worksap.service.UserService```: 该类是一个服务类的接口，继承了 ```UserDetailsService``` 接口
-- ```com.worksap.service.impl.UserServiceImpl```: 该类是 ```UserService``` 接口的实现类
+- ```com.worksap.service.UserServiceImpl```: 该类是 ```UserService``` 接口的实现类
 
 有了这些配置，我们实现的效果是：
 

@@ -1,24 +1,21 @@
 package com.worksap.repository;
 
-import com.worksap.model.entity.User;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.worksap.model.entity.User;
 
 /**
  * @author Xiaoyue Xiao
  */
-public interface UserRepository {
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    User selectUserById(Long id);
 
-    User selectUserByUsername(String username);
 
-    List<User> selectAllUsers();
+    User findByUsername(String username);
 
-    Integer insertUser(User user);
 
-    Integer updateUserOnPasswordById(User user);
 
-    Integer deleteUserById(Long id);
 
 }

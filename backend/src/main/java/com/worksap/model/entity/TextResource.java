@@ -31,6 +31,7 @@ public class TextResource {
     private String id;
     private String en;
     private String ja;
+    private String ip;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")

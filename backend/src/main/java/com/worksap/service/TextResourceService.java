@@ -38,8 +38,12 @@ public class TextResourceService {
     }
 
     @CacheEvict(value = CACHE_TEXT,allEntries = true)
-    public void add(List<TextResource> list) {
-        list.forEach(this::add);
+    public void add(List<TextResource> list, String ip) {
+
+        list.forEach(it->{
+            it.setIp(ip);
+            this.add(it);
+        });
     }
 
     @CacheEvict(value = CACHE_TEXT,allEntries = true)
@@ -55,21 +59,22 @@ public class TextResourceService {
     }
 
     @CacheEvict(value = CACHE_TEXT,allEntries = true)
-    public void add(TextResource tag) {
-        TextResource old = textResourceRepository.findOne(tag.getId());
+    public void add(TextResource text) {
+        TextResource old = textResourceRepository.findOne(text.getId());
         if (old != null) {
             TextResource newText = TextResource.builder()
                     .id(old.getId())
-                    .en(StringUtils.isNotBlank(tag.getEn()) ? tag.getEn() : old.getEn())
-                    .ja(StringUtils.isNotBlank(tag.getJa()) ? tag.getJa() : old.getJa())
+                    .en(StringUtils.isNotBlank(text.getEn()) ? text.getEn() : old.getEn())
+                    .ja(StringUtils.isNotBlank(text.getJa()) ? text.getJa() : old.getJa())
                     .createTime(old.getCreateTime())
                     .updateTime(LocalDateTime.now())
+                    .ip(text.getIp())
                     .build();
             textResourceRepository.save(newText);
         } else {
-            tag.setCreateTime(LocalDateTime.now());
-            tag.setUpdateTime(LocalDateTime.now());
-            textResourceRepository.save(tag);
+            text.setCreateTime(LocalDateTime.now());
+            text.setUpdateTime(LocalDateTime.now());
+            textResourceRepository.save(text);
         }
     }
 }

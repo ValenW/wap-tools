@@ -33,6 +33,8 @@
         </el-table-column>
         <el-table-column prop="updateTime" label="Last Update Time" width="200" sortable="custom">
         </el-table-column>
+        <el-table-column prop="ip" label="IP" width="200" sortable="custom">
+        </el-table-column>
         <el-table-column label="操作" width="150">
             <template scope="scope">
 					<el-button type="text" size="medium" @click="handleEdit(scope.$index, scope.row)"><i class="fa fa-edit"></i></el-button>
