@@ -1,37 +1,44 @@
 CREATE SCHEMA `wap_tools` DEFAULT CHARACTER SET utf8 ;
 
-
-DROP TABLE book IF EXISTS;
-DROP TABLE book_store IF EXISTS;
-DROP TABLE user IF EXISTS;
-
-CREATE TABLE book (
-  id            BIGINT IDENTITY PRIMARY KEY,
-  book_store_id BIGINT,
-  name          VARCHAR(80),
-  author        VARCHAR(80),
-  price         DECIMAL(10,2),
-  topic         VARCHAR(80),
-  publish_date  DATE
-);
-
-CREATE TABLE book_store (
-  id           BIGINT IDENTITY PRIMARY KEY,
-  name         VARCHAR(80),
-  address      VARCHAR(80)
-);
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS link;
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS tag_link;
+DROP TABLE IF EXISTS text_resource;
 
 CREATE TABLE user (
-  id            BIGINT IDENTITY PRIMARY KEY,
+  id            BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   username      VARCHAR(80),
   password      VARCHAR(80)
 );
 
 CREATE  TABLE  link(
-  id BIGINT IDENTITY PRIMARY KEY ,
-  name VARCHAR(80),
-  href VARCHAR(80),
-  status int,
-  create_time DATETIME,
-  update_time DATETIME
+  id            BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name          VARCHAR(80),
+  href          VARCHAR(1000),
+  status        INT,
+  create_time   DATETIME,
+  update_time   DATETIME
 );
+
+CREATE  TABLE  tag(
+  id            BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name          VARCHAR(40),
+  color         VARCHAR(40),
+  sys           INT
+);
+
+CREATE  TABLE  tag_link(
+  tag_id        INT,
+  link_id       INT,
+  PRIMARY KEY (tag_id, link_id)
+);
+
+CREATE TABLE text_resource (
+  id            BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  en            VARCHAR(200),
+  ja            VARCHAR(200),
+  create_time   DATETIME,
+  update_time   DATETIME,
+  ip            VARCHAR(45)
+)

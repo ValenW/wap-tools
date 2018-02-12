@@ -3,3 +3,4 @@ node_modules/
 npm-debug.log
 .editorconfig
 dist/
+front/package-lock.json

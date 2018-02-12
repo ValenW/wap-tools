@@ -7,6 +7,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -26,10 +27,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Hi Recruiting!")
-                .description("A tool project for recruiting.")
-                .termsOfServiceUrl("http://product-ci/company/hue-hr-recruiting")
-                .contact("@zuo_ji")
+                .title("Hi Attendance!")
+                .description("A tool project for Attendance team.")
+                .termsOfServiceUrl("http://product-ci/company/hue-hr-attendance")
+                .contact(new Contact("Wang Wenlong", "@wang_wenl", "@wang_wenl"))
                 .version("1.0")
                 .build();
     }
