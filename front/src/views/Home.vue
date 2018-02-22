@@ -9,7 +9,7 @@
                     <i class="fa fa-align-justify"></i>
                 </div>
             </el-col>
-            <el-col :span="4" class="userinfo">
+            <!-- <el-col :span="4" class="userinfo">
                 <el-dropdown trigger="hover">
                     <span class="el-dropdown-link userinfo-inner"><img
                             :src="this.sysUserAvatar"/> {{sysUserName}}</span>
@@ -19,7 +19,7 @@
                         <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-            </el-col>
+            </el-col> -->
         </el-col>
         <el-col :span="24" class="main">
             <aside :class="collapsed?'menu-collapsed':'menu-expanded'">

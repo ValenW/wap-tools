@@ -37,11 +37,11 @@ let routes = [{
         component: text,
         name: 'Text Resource'
       },
-      {
-        path: '/table',
-        component: Table,
-        name: 'Text Table'
-      },
+      // {
+      //   path: '/table',
+      //   component: Table,
+      //   name: 'Text Table'
+      // },
       // { path: '/user', component: user, name: '列表' },
     ]
   },
@@ -65,17 +65,18 @@ let routes = [{
   //         { path: '/page6', component: Page6, name: '导航三' }
   //     ]
   // },
+  // {
+  //   path: '/',
+  //   component: Home,
+  //   name: 'Charts',
+  //   iconCls: 'fa fa-bar-chart',
+  //   children: [{
+  //     path: '/echarts',
+  //     component: echarts,
+  //     name: 'echarts'
+  //   }]
+  // }, 
   {
-    path: '/',
-    component: Home,
-    name: 'Charts',
-    iconCls: 'fa fa-bar-chart',
-    children: [{
-      path: '/echarts',
-      component: echarts,
-      name: 'echarts'
-    }]
-  }, {
     path: '*',
     hidden: true,
     redirect: {

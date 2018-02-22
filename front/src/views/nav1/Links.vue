@@ -111,7 +111,7 @@ export default {
         if (!this.selectedTags || this.selectedTags.length === 0) {
           return true
         }
-        return this.selectedTags.some(it => item.tags.some(tag => tag.id === it))
+        return this.selectedTags.every(it => item.tags.some(tag => tag.id === it))
       }).filter(item => {
         return item.name.toLowerCase().indexOf(this.key.toLowerCase()) > -1
       })

@@ -32,8 +32,9 @@ public class TextResouceController {
     public PaginatedResult getTextResources(String keyword, Pager pager,HttpServletRequest request) {
         log.info(NetworkUtil.getClientIpAddress(request));
         keyword=keyword!=null?keyword.trim().toLowerCase():"";
-        return new PaginatedResult().setSize(textResourceService.count(keyword))
-        .setData(textResourceService.findAll(keyword,pager));
+        return new PaginatedResult()
+                .setSize(textResourceService.count(keyword))
+                .setData(textResourceService.findAll(keyword,pager));
     }
 
     @DeleteMapping("/text")
