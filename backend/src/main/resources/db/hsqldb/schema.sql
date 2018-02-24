@@ -1,4 +1,4 @@
-CREATE SCHEMA `wap_tools` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `wap_tools` DEFAULT CHARACTER SET utf8 ;
 
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS link;
@@ -41,4 +41,4 @@ CREATE TABLE text_resource (
   create_time   DATETIME,
   update_time   DATETIME,
   ip            VARCHAR(45)
-)
+);
