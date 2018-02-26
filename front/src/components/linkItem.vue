@@ -14,7 +14,7 @@
 
   <div class="link-content item-row">
     <div>{{link.href}}</div>
-    <div>{{link.createTime}}</div>
+    <div>{{link.updateTime}}</div>
   </div>
   <div class="line"></div>
 </div>

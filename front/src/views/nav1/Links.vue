@@ -25,8 +25,8 @@
 	<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
   </template>
 
-  <!-- link -->
-  <el-dialog title="Add a new link" :visible.sync="dialogVisible" width="30%">
+  <!-- Add a link -->
+  <el-dialog title="Add/Edit a link" :visible.sync="dialogVisible" width="30%">
     <el-form ref="form" :model="form" label-width="80px">
 
       <el-form-item label="Name">
@@ -51,7 +51,7 @@
   </el-dialog>
 
   <!-- Add a tag -->
-  <el-dialog title="Add a new link" :visible.sync="tagVisible" width="20%">
+  <el-dialog title="Add/Edit a tag" :visible.sync="tagVisible" width="20%">
 
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="Name">
