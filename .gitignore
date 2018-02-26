@@ -1,7 +1,9 @@
 front/package-lock.json
+npm-debug.log
 
 *.jar
 *.war
 
+docker/db/init.sql
 
 .idea
