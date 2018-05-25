@@ -25,8 +25,8 @@
 	<link-item :link="item" @remove="removeLink" @edit="editLink"></link-item>
   </template>
 
-  <!-- Add a link -->
-  <el-dialog title="Add/Edit a link" :visible.sync="dialogVisible" width="30%">
+  <!-- Add or update a link -->
+  <el-dialog :title="linkDialogTitle" :visible.sync="linkDialogVisible" width="30%">
     <el-form ref="form" :model="form" label-width="80px">
 
       <el-form-item label="Name">
@@ -39,30 +39,37 @@
       <el-form-item label="Tags">
         <el-checkbox-group v-model="form.tags">
           <span v-for="tag in tags">
-              <el-checkbox style="margin-right:10px" :label="tag.id">{{tag.name}}</el-checkbox>
-            </span>
+              <el-checkbox style="margin-right:10px;" :label="tag.id">
+                <el-tag size="mini" :color="tag.color" style="color:#fff">{{tag.name}}</el-tag>
+              </el-checkbox>
+          </span>
         </el-checkbox-group>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">Cancel</el-button>
+				<el-button @click="linkDialogVisible = false">Cancel</el-button>
 				<el-button type="primary" @click="add" :loading="linkSaving">Confirm</el-button>
 			</span>
   </el-dialog>
 
-  <!-- Add a tag -->
-  <el-dialog title="Add/Edit a tag" :visible.sync="tagVisible" width="20%">
+  <!-- Add or update a tag -->
+  <el-dialog :title="tagDialogTitle" :visible.sync="tagDialogVisible" width="20%">
 
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="Name">
         <el-input v-model="formTag.name"></el-input>
       </el-form-item>
-      <el-form-item label="Type">
+      <el-form-item label="Color" style="margin-bottom: 0px">
         <el-color-picker v-model="formTag.color" @active-change="colorChange" show-alpha></el-color-picker>
+        <el-tooltip class="random-color" effect="dark" content="Set random color" placement="right">
+         <div style='display:inline-block'>
+             <el-button @click="setRandomColor" size="small"><i class="fa fa-exchange"></i></el-button>
+         </div>
+         </el-tooltip>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-				<el-button @click="tagVisible = false">Cancel</el-button>
+				<el-button @click="tagDialogVisible = false">Cancel</el-button>
 				<el-button type="primary" @click="addTagConfirm">Confirm</el-button>
 			</span>
   </el-dialog>
@@ -83,8 +90,10 @@ import linkItem from '@/components/linkItem'
 export default {
   data() {
     return {
-      tagVisible: false,
-      dialogVisible: false,
+      tagDialogVisible: false,
+      linkDialogVisible: false,
+      linkDialogTitle:'',
+      tagDialogTitle:'',
       key: '',
       all: [],
       form: {
@@ -127,7 +136,8 @@ export default {
         if (res.status === 200) {
           console.log(res)
           this.getTags()
-          this.getLinks()
+          this.triggerUpdateLink()
+
           this.$notify({
             title: 'Success',
             message: 'Deleted',
@@ -144,7 +154,8 @@ export default {
     },
     editLink(link) {
       console.log('edit', link)
-      this.dialogVisible = true
+      this.linkDialogVisible = true
+      this.linkDialogTitle = "Edit link"
       this.form = {
         id: link.id,
         name: link.name,
@@ -153,23 +164,56 @@ export default {
       }
     },
     addTagConfirm() {
+      var isAddNew = (this.formTag.id == '');
       addTag(this.formTag).then(res => {
         this.getTags()
         console.log(res)
-        this.tagVisible = false
+        console.log((isAddNew ? 'add tag status: ' : 'update tag status: ') + res.status)
+        this.tagDialogVisible = false
         this.getLinks()
+        if (!isAddNew) {
+            // Trick: update the links which used the modified tag
+            this.triggerUpdateLink()
+        }
       })
     },
 
-    showAddTag() {
-      this.tagVisible = true
+    setRandomColor() {
+      this.formTag.color = '#'+Math.floor(Math.random()*0xFFFFFF).toString(16);
     },
+
+    showAddTag() {
+      this.formTag = {
+          id: '',
+          name: '',
+          color: ''
+      }
+      this.tagDialogVisible = true
+      this.tagDialogTitle = "Add a new tag"
+      this.setRandomColor();
+    },
+
     showEditTag() {
       this.formTag.id = this.selectedTags[0]
       const tag = this.tags.filter(item => item.id == this.formTag.id)[0]
       this.formTag.name = tag.name
       this.formTag.color = tag.color
-      this.tagVisible = true
+      this.tagDialogVisible = true
+      this.tagDialogTitle = "Edit tag"
+    },
+
+    // Trick: trigger update links after some event like modified one tag or delete tags
+    triggerUpdateLink() {
+        if (this.all.length > 0) {
+            var link = this.all[0];
+            this.form = {
+              id: link.id,
+              name: link.name,
+              href: link.href,
+              tags: link.tags.map(it => it.id)
+            }
+            this.add();
+        }
     },
 
     getLinks() {
@@ -179,7 +223,8 @@ export default {
       })
     },
     showAdd() {
-      this.dialogVisible = true
+      this.linkDialogVisible = true
+      this.linkDialogTitle = "Add a new link"
       this.form = {
         name: '',
         href: '',
@@ -197,7 +242,7 @@ export default {
       this.linkSaving = true
       addLink(params).then(res => {
         console.log(res)
-        this.dialogVisible = false
+        this.linkDialogVisible = false
         this.getLinks()
         this.linkSaving = false
       })
@@ -247,5 +292,10 @@ export default {
 .link-row {
   display: flex;
   justify-content: space-between;
+}
+
+.random-color {
+    vertical-align: top;
+    margin-left: 8px;
 }
 </style>

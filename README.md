@@ -21,14 +21,25 @@ mvn eclipse:eclipse
 mvn spring-boot:run
 ```
 
+## From docker
+1. setup a mysql DB and import the intial script (db.sql)
+```
+> mysql < db.sql
+```
+2. update config/application.properties. Update the database connection related items.
+```
+spring.datasource.url=jdbc:mysql://db:3306/wap_tools?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+spring.datasource.username=admin
+spring.datasource.password=admin
+```
+
+and then,
+```bash
+docker/build.sh
+docker/re-deploy.sh
+```
+
 ## update
-### 2018.02.24
-1. 增加Docker镜像创建和部署脚本
-
-### 2018.01.21
-1. 支持服务端搜索text resource
-2. 支持带”的csv格式的text resource导入和生成。
-
 ### 2017.12.23
 1. tag 支持多种顔色以及自选颜色
 2. 修复tag filter 的bug
@@ -37,6 +48,9 @@ mvn spring-boot:run
 3. 记录生成过的 `text resource`,并支持搜索、修改和重新生成。
 4. text resource 支持转义字符，如`"` `\`
 
+### 2018.01.21
+1. 支持服务端搜索text resource
+2. 支持带”的csv格式的text resource导入和生成。
 
 # Relate Links
 - [vue-admin](https://github.com/taylorchen709/vue-admin)

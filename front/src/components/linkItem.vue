@@ -9,12 +9,12 @@
     </div>
   </div>
   <div class="link-tags">
-    <el-tag class="link-tag" v-for="tag in link.tags" style="margin-right:10px" size="mini" :color="tag.color">{{tag.name}}</el-tag>
+    <el-tag class="link-tag" v-for="tag in link.tags" v-bind:key="tag.id" style="margin-right:10px" size="mini" :color="tag.color">{{tag.name}}</el-tag>
   </div>
 
   <div class="link-content item-row">
     <div>{{link.href}}</div>
-    <div>{{link.updateTime}}</div>
+    <div>{{link.createTime}}</div>
   </div>
   <div class="line"></div>
 </div>
